@@ -1,0 +1,1 @@
+matrixOnlyOnes = ones(2,3)matrixOnlyZeros = zeros(2,3)matrixIdentity = eye(4)matrixRand = rand(2,3)matrixRandNormalDistribution = randn(2,3)hist(matrixRandNormalDistribution)2*matrixOnlyOnes
