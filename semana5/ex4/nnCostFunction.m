@@ -78,6 +78,17 @@ for i = 1:m
 endfor
 
 J = (1/m)*sum(sum((-yvec).*log(a3)-(1-yvec).*log(1-a3)));
+
+temp_theta1 = Theta1;
+temp_theta2 = Theta2;
+
+temp_theta1(:,1) = zeros(size(Theta1, 1),1);
+temp_theta2(:,1) = zeros(size(Theta2, 1),1);
+
+%Regularization
+J = J + (lambda/(2*m))*(sum(sum(temp_theta1.^2,2))+sum(sum(temp_theta2.^2,2)));
+
+
 % -------------------------------------------------------------
 
 % =========================================================================
