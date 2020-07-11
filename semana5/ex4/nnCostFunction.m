@@ -90,21 +90,14 @@ J = J + (lambda/(2*m))*(sum(sum(temp_theta1.^2,2))+sum(sum(temp_theta2.^2,2)));
 
 temp_X = [ones(m,1) X];
 
-for t = 1:m
-	z2 = Theta1*temp_X(t,:)';
-	a2 = sigmoid(z2)';
+delta3 = a3 - yvec;
+delta2 = (delta3*Theta2).*[ones(m,1) sigmoidGradient(z2)];
 
-	z3 = [ones(size(a2,1)) a2];
-	a3 = Theta2*z3';
+Theta2_grad = (1/m)*(delta3'*[ones(m,1) a2]);
+Theta1_grad = (1/m)*(delta2(:,2:end)'*temp_X);
 
-	delta3 = a3 - yvec(t,:)';
-	delta2 = (Theta2'*delta3).*sigmoidGradient([ones(1,1); z2]);
-
-	
-	Theta2_grad = Theta2_grad + delta3 * [ones(size(a2,1),1) a2];
-
-	Theta1_grad = Theta1_grad + delta2(2:end,:) * temp_X(t,:);
-endfor
+Theta2_grad = Theta2_grad + lambda/m*temp_theta2;
+Theta1_grad = Theta1_grad + lambda/m*temp_theta1;
 % -------------------------------------------------------------
 
 % =========================================================================
