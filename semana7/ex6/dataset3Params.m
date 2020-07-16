@@ -23,11 +23,26 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+possibles = [0.01 0.03 0.1 0.3 1 3 10 30];
 
+result = zeros(64, 3);
+indice = 0;
 
+for i = 1 : length(possibles)
+  for j = 1 : length(possibles) 
+    indice = indice + 1;
+    model = svmTrain(X, y, possibles(i), @(x1,x2) gaussianKernel(x1, x2, possibles(j)));
+    predic = svmPredict(model, Xval);
+    error = mean(double(predic ~= yval));
+    
+    result(indice, :) = [possibles(i), possibles(j), error];
+  endfor
+endfor
 
+linha = sortrows(result, 3)(1 , : );
 
-
+C = linha(1);
+sigma = linha(2);
 
 % =========================================================================
 
